@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="en">
+<html lang="en" data-arp-injected="true">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="Create a Free Linux VPS">
+    <title>Create Free VPS - Woiden.id</title>
+    
+    <style type="text/css">
+        .medium-zoom-overlay {
+            position: fixed;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            opacity: 0;
+            transition: opacity .3s;
+            will-change: opacity
+        }
+
+        .medium-zoom--open .medium-zoom-overlay {
+            cursor: pointer;
+            cursor: zoom-out;
+            opacity: 1
+        }
+
+        .medium-zoom-image {
+            cursor: pointer;
+            cursor: zoom-in;
+            transition: transform .3s
+        }
+
+        .medium-zoom-image--open {
+            position: relative;
+            cursor: pointer;
+            cursor: zoom-out;
+            will-change: transform
+        }
+    </style>
+   
+</head>
+
+<body>
+
+   
+    <nav class="navbar navbar-sm navbar-expand-lg  border-secondary border-bottom">
+        <div class="container">
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse"
+                aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon navbar-dark"><i class="fas fa-bars text-dark"></i></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarCollapse">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/home/">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link"
+                            href="https://wiki.woiden.id/2022/04/07/how-to-create-a-free-nat-vps-on-woiden-id/">How to
+                            Create a Free VPS</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/create-vps/">Create VPS</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown"
+                            aria-haspopup="true" aria-expanded="false">
+                            VPS
+                        </a>
+                        <div class="dropdown-menu">
+                            <a class="dropdown-item" href="/create-vps/">Create VPS</a>
+                            <a class="dropdown-item" href="/remove-vps/">Remove VPS</a>
+                            <a class="dropdown-item" href="/vps-info/">VPS Info</a>
+                            <a class="dropdown-item" href="/vps-status/">VPS Status</a>
+                            <a class="dropdown-item" href="/vps-control/">VPS Control</a>
+                            <a class="dropdown-item" href="/vps-reset-password/">VPS Password</a>
+                            <a class="dropdown-item" href="/vps-reinstall/">VPS Reinstall</a>
+                        </div>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="/login">Login</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/register">Register</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <div class="container">
+        <div class="text-center">
+            <div class="alert alert-info"><a href="https://hax.co.id/" target="_BLANK" class="text-primary">Create a
+                    free IPv6 only VPS at HAX.co.id</a></div>
+            <div class="alert alert-danger">Join our <a href="https://t.me/ipv6server/" class="text-primary">Telegram
+                    Group</a> | <a href="https://t.me/haxserver" class="text-primary"> Telegram Channel</a> for
+                important updates</div>
+        </div>
+    </div>
+
+    <div class="container">
+        <h3>What is a NAT VPS?</h3>
+        <p>NAT VPS is almost similar to other VPS but uses the NAT (Network Address Translation) method so that a single
+            IPv4 can be shared to many VPS and then assigns a different port for each user.</p>
+    </div>
+
+    <div class="container">
+        <div class="text-center">
+           
+        </div>
+    </div>
+    <div class="container text-center">
+        <a href="/vps-info" class="text-primary">VPS Info</a> |
+        <a href="/vps-status" class="text-primary">VPS Status</a> |
+        <a href="/vps-reinstall" class="text-primary">Reinstall VPS</a> |
+        <a href="/vps-reset-password/" class="text-primary">Reset VPS Password</a> |
+        <a href="/vps-control" class="text-primary">Poweroff &amp; Restart VPS</a> |
+        <a href="https://ssh.hax.co.id/" target="_BLANK" class="text-primary">Web Base Terminal</a>
+    </div>
+    <main class="main" role="main">
+        <div class="bg-white py-5">
+            <div class="container">
+                <div class="text-center mb-5">
+                    <h2>Create a Free NAT VPS</h2>
+                </div>
+                <div class="row justify-content-center">
+                    <div class="col-md-9">
+                        <div class="row">
+                            <div class="col-sm">
+                                <div class="card mb-12">
+                                    <div class="card-body my-3">
+                                       
+                                        <div class="clearfix"></div>
+                                        <div id="response"></div>
+                                        <form action="" method="POST" class="submit" id="form-submit">
+                                            <div class="form-group">
+                                                <label>Data Center</label>
+                                                <select name="location" class="form-control" id="datacenter" onclick="console.log('locationclick')" 
+                                                    required="">
+                                                    <option value="">-select-</option>
+                                                    <option value="EU-2">EU-2 - Germany - Hetzner - SSD + Shared IPv4 +
+                                                        Dedicated IPv6 </option>
+
+                                                </select>
+                                            </div>
+                                            <div class="form-group">
+                                                <label>Operating System</label>
+                                                <select name="os" class="form-control" id="os" required="" onclick="console.log('osclick')">
+                                                    <option value="">-select-</option>
+                                                    <option value="ubuntu-20">Ubuntu 20</option>
+                                                    <option value="centos-7.9">Centos 7.9</option>
+                                                    <option value="debian-11">Debian 11</option>
+                                                    <option value="debian-10">Debian 10</option>
+                                                    <option value="suse-13.2-x86_64">Suse 13.2</option>
+                                                    <option value="almalinux-8.4">Almalinux 8.4</option>
+                                                </select>
+                                            </div>
+                                            <div class="form-group">
+                                                <label>Password (only letters and numbers)</label>
+                                                <input type="password" name="password" class="form-control"
+                                                    id="password" placeholder="Password" required="required">
+                                            </div>
+                                            <div class="form-group">
+                                                <label>VPS Purpose</label>
+                                                <select name="purpose" class="form-control" id="purpose" required="" onclick="console.log('purposeclick')">
+                                                    <option value="">-select-</option>
+                                                    <option value="Web Server">Web Server</option>
+                                                    <option value="VPN Server">VPN Server</option>
+                                                    <option value="Hosting Bot">Hosting Bot</option>
+                                                    <option value="Learn Linux">Learn Linux</option>
+                                                    <option value="others">others</option>
+                                                </select>
+                                            </div>
+                                            
+                                            <fieldset class="form-group">
+                                                <div class="row">
+                                                    <div class="col-sm-12">
+                                                        <div class="form-check">
+                                                            <input class="form-check-input" type="checkbox"
+                                                                name="agreement[]" value="yes" required="" onclick="console.log('0click')">
+                                                            <label class="form-check-label">
+                                                                I understand that this VPS using shared IPv4
+                                                            </label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </fieldset>
+                                            <fieldset class="form-group">
+                                                <div class="row">
+                                                    <div class="col-sm-12">
+                                                        <div class="form-check">
+                                                            <input class="form-check-input" type="checkbox"
+                                                                name="agreement[]" value="yes" required="" onclick="console.log('1click')">
+                                                            <label class="form-check-label">
+                                                                I agree that this VPS service is without technical
+                                                                support
+                                                            </label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </fieldset>
+                                            <fieldset class="form-group">
+                                                <div class="row">
+                                                    <div class="col-sm-12">
+                                                        <div class="form-check">
+                                                            <input class="form-check-input" type="checkbox"
+                                                                name="agreement[]" value="yes" required="" onclick="console.log('2click')">
+                                                            <label class="form-check-label">
+                                                                I agree that this VPS service has no backup
+                                                            </label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </fieldset>
+                                            <fieldset class="form-group">
+                                                <div class="row">
+                                                    <div class="col-sm-12">
+                                                        <div class="form-check">
+                                                            <input class="form-check-input" type="checkbox"
+                                                                name="agreement[]" value="yes" required="">
+                                                            <label class="form-check-label">
+                                                                I agree that I will not use VPS for Mining, Spamming,
+                                                                Torrent, DDOS, and any illegal activities, if I do,
+                                                                Woiden.id can terminate my VPS
+                                                            </label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </fieldset>
+                                            <fieldset class="form-group">
+                                                <div class="row">
+                                                    <div class="col-sm-12">
+                                                        <div class="form-check">
+                                                            <input class="form-check-input" type="checkbox"
+                                                                name="agreement[]" value="yes" required="">
+                                                            <label class="form-check-label">
+                                                                I have read <a href="/terms-of-service">Terms of
+                                                                    service</a>
+                                                            </label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </fieldset>
+
+                                            <div class="form-group">
+                                                <div class="g-recaptcha mb-3"
+                                                    data-sitekey="6LdZ3_YZAAAAALyzLQjyjE6RPFdcG9A-TLr6AxF0"
+                                                    style="transform:scale(0.77);-webkit-transform:scale(0.77);transform-origin:0 0;-webkit-transform-origin:0 0;">
+                                                    <div style="width: 304px; height: 78px;">
+                                                        <div><iframe title="reCAPTCHA"
+                                                                src="https://www.recaptcha.net/recaptcha/api2/anchor?ar=1&amp;k=6LdZ3_YZAAAAALyzLQjyjE6RPFdcG9A-TLr6AxF0&amp;co=aHR0cHM6Ly93b2lkZW4uaWQ6NDQz&amp;hl=zh-CN&amp;v=pCoGBhjs9s8EhFOHJFe8cqis&amp;size=normal&amp;cb=tw4fbsve5r4o"
+                                                                width="304" height="78" role="presentation"
+                                                                name="a-91lkr4je45i8" frameborder="0" scrolling="no"
+                                                                sandbox="allow-forms allow-popups allow-same-origin allow-scripts allow-top-navigation allow-modals allow-popups-to-escape-sandbox allow-storage-access-by-user-activation"></iframe>
+                                                        </div><textarea id="g-recaptcha-response"
+                                                            name="g-recaptcha-response" class="g-recaptcha-response"
+                                                            style="width: 250px; height: 40px; border: 1px solid rgb(193, 193, 193); margin: 10px 25px; padding: 0px; resize: none; display: none;"></textarea>
+                                                    </div><iframe style="display: none;"></iframe>
+                                                </div>
+                                            </div>
+
+                                           
+                                            <br><br>
+                                            <div class="clearfix"></div>
+                                            <button name="submit_button" type="button" class="btn btn-primary">CREATE
+                                                VPS</button>
+                                            <br><br>
+                                           
+                                            <ins class="adsbygoogle" style="display:block"
+                                                data-ad-client="ca-pub-7588871336474804" data-ad-slot="6652466190"
+                                                data-ad-format="auto" data-full-width-responsive="true"></ins>
+                                            <script>
+                                                (adsbygoogle = window.adsbygoogle || []).push({});
+                                            </script>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div><!-- /.row -->
+                    </div>
+                </div><!-- /.row -->
+            </div>
+        </div>
+    </main>
+   
+    <div class="container">
+        <div class="text-center">
+
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="text-center">
+            <h5><a href="https://t.me/ipv6server" class="text-primary">Join our Telegram Group</a></h5>
+        </div>
+    </div>
+
+    <div class="py-6 bg-white ">
+        <div class="container">
+
+            <div class="row mt-5">
+                <div class="col-md-4">
+                    <div class="media">
+                        <div class="icon mr-1 bg-dark">
+                            <i class="fas fa-terminal"></i>
+                        </div>
+                        <div class="media-body">
+                            <h3 class="h4">SSH Access</h3>
+                            <p class="text-dark text-left">
+                                Full SSH access to manage and install your application
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="media">
+                        <div class="icon mr-3 bg-dark">
+                            <i class="fas fa-tachometer-alt"></i>
+                        </div>
+                        <div class="media-body">
+                            <h3 class="h4">Unmetered Bandwidth</h3>
+                            <p class="text-dark text-left">
+                                All data centers provide Unlimited bandwidth
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="media">
+                        <div class="icon mr-3 bg-dark">
+                            <i class="fas fa-map-marker"></i>
+                        </div>
+                        <div class="media-body">
+                            <h3 class="h4">Shared IPv4</h3>
+                            <p class="text-dark text-left">
+                                VPS comes with Shared IPv4 and Dedicated IPv6
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div><!-- /.row -->
+
+        </div>
+    </div>
+
+
+
+    <footer role="contentinfo" class="py-6 lh-1 bg-white text-primary">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-10">
+                    <div class="row">
+                        <div class="col-md-4 col-sm-6">
+                            <h4 class="h6">Tutorial</h4>
+                            <ul class="list-unstyled">
+                                <li><a href="#">coming soon</a></li>
+                            </ul>
+                        </div>
+                        <div class="col-md-3 col-sm-6">
+                            <h4 class="h6">Website Information</h4>
+                            <ul class="list-unstyled">
+                                <li><a href="/terms-of-service">Terms of Service</a></li>
+                                <li><a href="/disclaimer">Disclaimer</a></li>
+                                <li><a href="/privacy-policy">Privacy Policy</a></li>
+                                <li><a href="/sitemap.xml">Sitemap</a></li>
+                            </ul>
+                        </div>
+                        <div class="col-md-3 col-sm-6">
+                            <h4 class="h6">Social Media</h4>
+                            <ul class="list-unstyled">
+                                <li><a href="https://t.me/ipv6server">Telegram</a></li>
+                                <li><a href="/contact/">Contact</a></li>
+                                <li><a href="/report-abuse/">Report Abuse</a></li>
+                            </ul>
+                        </div>
+                        <div class="col-md-2 col-sm-6">
+                            <h4 class="h6">Account</h4>
+                            <ul class="list-unstyled">
+                                <li><a href="/login/">Login</a></li>
+                                <li><a href="/register/">Register</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="container">
+            <div class="row">
+                <div class="col-12 text-center text-sm">
+            
+                </div>
+            </div>
+        </div>
+    </footer>
+  
+</body>
+
+</html>
+
+</html>

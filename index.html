@@ -1,0 +1,98 @@
+
+<!DOCTYPE html>
+<html lang="zh-cn">
+  <head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0,maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>多模型GPT内部版</title>
+    <style type="text/css" media="screen">
+  * {
+    margin: 0px 0px 0px 0px;
+    padding: 0px 0px 0px 0px;
+  }
+
+  body, html {
+    padding: 3px 3px 3px 3px;
+
+    background-color: #D8DBE2;
+
+    font-family: Verdana, sans-serif;
+    font-size: 11pt;
+    text-align: center;
+  }
+
+  div.main_page {
+    position: relative;
+    display: table;
+
+    width: 80%;
+
+    margin-bottom: 3px;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 0px 0px 0px 0px;
+
+    border-width: 2px;
+    border-color: #212738;
+    border-style: solid;
+
+    background-color: #F5F6F7;
+
+
+    text-align: center;
+  }
+
+  div.page_header {
+    padding-top:30px;
+    padding-bottom:50px;
+    width: 100%;
+
+    background-color: #F5F6F7;
+  }
+
+  div.page_header span {
+    margin: 0px 0px 0px 0px;
+
+    font-size: 180%;
+    font-weight: bold;
+  }
+
+  div.title{
+    margin: 60px 0px 0px 0px;
+    inline-height:100px;
+
+   }
+  li {
+	text-align: left;
+	margin: 20px 0px 0px 50px;
+
+  }
+  .despriton {
+	width:70%;
+	margin: 0 auto;
+
+  }
+
+    </style>
+  </head>
+  <body>
+    <div class="main_page">
+       		<div class="page_header title"><span>多模型GPT内部版</span></div>
+		<div class="page_header"><h3>模型说明：</h3>
+			<div class="despriton">
+			<li>chat/completions:包含GPT或Chat的模型，正常的聊天</li>
+			<li>completions:davinci、curie、babbage、ada等，给出前导自动生成补全语句</li>
+			<li>embeddings:包含embedding的模型，生成embeddings编码</li>
+			<li>moderations:包含moderations的模型，对文本进行审查</li>
+			<li>images/generations:kandinsky模型，根据描述生成图像(支持中文描述)</li>
+			<li>audio/transcriptions:whisper模型，进行语音识别转换</li>
+			</div>
+		</div>
+
+		<div class="page_header"><a href="https://chat.xn--jrx586dglk.eu.org/chat/"><img src="client/img/favicon-32x32.png" width="32px" align="center">GPT主站(建议)</a>
+		<a href="https://gpt.xn--jrx586dglk.eu.org/chat/"><img src="client/img/gpt.png" width="30px"  align="center">GPT备用站(恢复)</a></div>
+    </div>
+  </body>
+</html>
+

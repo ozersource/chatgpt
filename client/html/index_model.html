@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0 maximum-scale=1.0" />
+		<meta name="description" content="A conversational AI system that listens, learns, and challenges" />
+		<meta property="og:title" content="ChatGPT" />
+		<meta property="og:image" content="https://openai.com/content/images/2022/11/ChatGPT.jpg" />
+		<meta
+			property="og:description"
+			content="A conversational AI system that listens, learns, and challenges" />
+		<meta property="og:url" content="https://chat.acy.dev" />
+    <link rel="stylesheet" href="{{ url_for('bp.static', filename='css/bootstrap.min.css') }}" />
+    <script src="{{ url_for('bp.static', filename='js/bootstrap.bundle.js') }}"></script>
+		<link rel="stylesheet" href="{{ url_for('bp.static', filename='css/style.css') }}" />
+		<link
+			rel="apple-touch-icon"
+			sizes="180x180"
+			href="{{ url_for('bp.static', filename='img/apple-touch-icon.png') }}" />
+		<link
+			rel="icon"
+			type="image/png"
+			sizes="32x32"
+			href="{{ url_for('bp.static', filename='img/favicon-32x32.png') }}" />
+		<link
+			rel="icon"
+			type="image/png"
+			sizes="16x16"
+			href="{{ url_for('bp.static', filename='img/favicon-16x16.png') }}" />
+		<link rel="manifest" href="{{ url_for('bp.static', filename='img/site.webmanifest') }}" />
+		<link
+			rel="stylesheet"
+			href="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@latest/build/styles/base16/dracula.min.css" />
+    <title>GPT内部版</title>
+	</head>
+
+	<body data-urlprefix="{{ url_prefix}}">
+		<div class="main-container">
+			<div class="box sidebar">
+				<div class="top">
+					<button class="button" onclick="new_conversation()">
+						<i class="fa-regular fa-plus"></i>
+						<span>{{_('New Conversation')}}</span>
+					</button>
+					<div class="spinner"></div>
+				</div>
+				<div class="sidebar-footer">
+					<button class="button" onclick="delete_conversations()">
+						<i class="fa-regular fa-trash"></i>
+						<span>{{_('Clear Conversations')}}</span>
+					</button>
+					<div class="api-key-container d-none" id="api-key-container">
+						<button id="show-api-key-button" class="button">
+							<i class="fa-regular fa-key"></i> 
+							<span>{{_('API Key')}}</span>
+						</button>
+						<input type="password" id="API-key" class="hidden fade-in" />
+						<button id="api-key-ok-button" class="button hidden fade-in">{{_('Ok')}}</button>
+					</div>
+					<div class="settings-container">
+						<div class="checkbox field">
+							<span>{{_('Dark Mode')}}</span>
+							<input type="checkbox" id="theme-toggler" />
+							<label for="theme-toggler"></label>
+						</div>
+						<div class="field">
+							<span>{{_('Language')}}</span>
+							<select
+								class="dropdown"
+								id="language"
+								onchange="changeLanguage(this.value)"></select>
+						</div>
+					</div>
+					<a
+						class="info"
+						href="https://xn--jrx586dglk.eu.org"
+						target="_blank">
+						<i><img src="{{ url_for('bp.static', filename='img/favicon-32x32.png') }}"></i>
+					</a>
+				</div>
+			</div>
+			<div class="conversation">
+				<div class="stop-generating stop-generating-hidden">
+					<button class="button" id="cancelButton">
+						<span>{{_('Stop Generating')}}</span>
+					</button>
+				</div>
+				<div class="box" id="messages"></div>
+				<div class="user-input">
+					<div class="box input-box">
+						<textarea
+							id="message-input"
+							placeholder="{{_('Ask a question')}}"
+							cols="30"
+							rows="10"
+							style="white-space: pre-wrap"></textarea>
+						<div id="send-button">
+							<i class="fa-regular fa-paper-plane-top"></i>
+						</div>
+					</div>
+				</div>
+				<div>
+					<div class="options-container">
+						<div class="buttons">
+							<div class="field">
+								<select class="dropdown" name="model" id="model">
+									{('models')}						</select>
+							</div>
+							<div class="field">
+								<select class="dropdown" name="jailbreak" id="jailbreak">
+									<option value="default" selected>{{_('Default')}}</option>
+									<option value="gpt-dan-11.0">{{_('DAN')}}</option>
+									<option value="gpt-evil">{{_('Evil')}}</option>
+								</select>
+							</div>
+						</div>
+						<div class="field checkbox">
+							<input type="checkbox" id="switch" />
+							<label for="switch"></label>
+							<span>{{_('Web Access')}}</span>
+						</div>
+						<div class="field"><button class="button" onclick="$('#message-input').val('/status');$('#send-button').click()"><span>状态查询</span></button></div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="menu-button">
+			<i class="fa-solid fa-bars"></i>
+		</div>
+
+		<!-- scripts -->
+		<script>
+			window.conversation_id = "{{ chat_id }}";
+		</script>
+		<script src="{{ url_for('bp.static', filename='js/api-key.js') }}"></script>
+		<script src="{{ url_for('bp.static', filename='js/icons.js') }}"></script>
+		<script src="{{ url_for('bp.static', filename='js/chat.js') }}" defer></script>
+		<script src="https://cdn.jsdelivr.net/npm/markdown-it@latest/dist/markdown-it.min.js"></script>
+		<script src="{{ url_for('bp.static', filename='js/highlight.min.js') }}"></script>
+		<script src="{{ url_for('bp.static', filename='js/highlightjs-copy.min.js') }}"></script>
+		<script src="{{ url_for('bp.static', filename='js/theme-toggler.js') }}"></script>
+		<script src="{{ url_for('bp.static', filename='js/sidebar-toggler.js') }}"></script>
+		<script src="{{ url_for('bp.static', filename='js/change-language.js') }}"></script>
+    <script src="{{ url_for('bp.static', filename='js/jquery.min.js') }}"></script>
+    <script src="{{ url_for('bp.static', filename='js/jquery.cookie.min.js') }}"></script>
+    <script src="{{ url_for('bp.static', filename='js/login.js') }}"></script>
+    <div class="row">
+        <div class="col-md-12">
+            <button id="modal-493752" href="#modal-container-493752" role="button" class="d-none"
+                data-bs-toggle="modal">login</button>
+            
+
+            <div class="modal fade" id="modal-container-493752" tabindex="-1" role="dialog"
+                aria-labelledby="myModalLabel" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
+                <div class="modal-dialog modal-dialog-centered" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header text-bg-primary">
+                            <h5 class="modal-title" id="myModalLabel">
+                                <i class="fa fa-user"></i>多模型GPT系统-登录
+                            </h5>
+                            
+                        </div>
+                        <button id="closemodal" type="button" class="btn hiding" data-bs-dismiss="modal" aria-label="Close" style="display: none;">
+                        </button>
+                        <form class="was-validated" onsubmit="return login();">
+                            <div class="modal-body">
+                                <div class="row">
+                                    <div class="col-md-12">
+
+                                        <div class="form-floating mb-3 mt-3">
+
+                                            <input type="text" class="form-control rounded-0 bg-light" minlength="2" id="stu_name"
+                                                placeholder="用户名" name="stu_name" required="true" />
+                                         <div class="valid-feedback">
+                                                格式正确！
+                                            </div>
+                                            <div class="invalid-feedback">
+                                                请输入用户名！
+                                            </div>
+                                        </div>
+                                        <div class="form-floating mb-3 mt-3">
+
+                                            <input type="password" class="form-control rounded-0 bg-light" minlength="2" id="stu_pwd"
+                                                placeholder="密码" name="stu_pwd" required="true" />
+                                            <div class="valid-feedback">
+                                                格式正确！
+                                            </div>
+                                            <div class="invalid-feedback">
+                                                请输入密码！
+                                            </div>
+                                        </div>
+
+
+
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="modal-footer bg-primary-subtle">
+                                <div class="m-auto text-danger d-none">登录失败，请检查用户名和密码！</div>
+                                
+                                <button type="submit" class="btn btn-primary">
+                                    登录系统
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+	</body>
+</html>
