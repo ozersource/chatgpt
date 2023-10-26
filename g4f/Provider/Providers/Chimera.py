@@ -322,7 +322,7 @@ def _create_completion(api_key: str, model: str, messages: list, stream: bool, *
     #根据endpoint调用模型
     if(endpoint=='chat/completions'):
         for msg in chat_completions(endpoint,model,messages):
-            yield msg
+            yield str(msg).decode('utf-8')
 
     if(endpoint=='completions'):  
         for msg in completions(endpoint,model):
