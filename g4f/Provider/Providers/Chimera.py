@@ -89,6 +89,7 @@ needs_auth = False
 def _create_completion(api_key: str, model: str, messages: list, stream: bool, **kwargs):
     #chat
     def chat_completions(endpoint,model,messages):
+        print(api_key)
         yield endpoint+"-"+model+"：\n\n"
         print(endpoint)
         try:
