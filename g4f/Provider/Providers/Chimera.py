@@ -11,7 +11,7 @@ from langdetect import detect
 import datetime
 
 load_dotenv()
-api_key_env = os.environ.get("CHIMERA_API_KEY")
+api_key_env = 'HY9X_ylA7dRfWAaDLtNWtXTkHAD9R7dPz0k5ieoAz34' # os.environ.get("CHIMERA_API_KEY")
 openai.api_base = "https://api.naga.ac/v1"
 url = 'https://api.naga.ac/'
 model = [
