@@ -101,7 +101,7 @@ def _create_completion(api_key: str, model: str, messages: list, stream: bool, *
             )
             
             for chunk in response:
-                yield chunk.choices[0].delta.get("content", ""))
+                yield chunk.choices[0].delta.get("content", "")
             print(response)    
         except openai.error.PermissionError as e:
             yield e.user_message
