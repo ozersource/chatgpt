@@ -115,10 +115,10 @@ def _create_completion(api_key: str, model: str, messages: list, stream: bool, *
             if match:
                 error_message = match.group(1)
                 print(error_message)
-                #yield error_message
+                yield error_message
             else:
                 print(e.user_message)
-                #yield e.user_message
+                yield e.user_message
         except Exception as e:
             # 处理其他异常
             print(e)
