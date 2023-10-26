@@ -289,6 +289,7 @@ def _create_completion(api_key: str, model: str, messages: list, stream: bool, *
         yield json.dumps(transcript, ensure_ascii=False)
     prompt=messages[-1]['content']
     openai.api_key = api_key if api_key else api_key_env
+    print(openai.api_key)
     #匹配endpoint
     for models_endpoints in data['data']:
         if models_endpoints['id'] == model:
