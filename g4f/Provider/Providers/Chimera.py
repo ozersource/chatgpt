@@ -288,7 +288,7 @@ def _create_completion(api_key: str, model: str, messages: list, stream: bool, *
         transcript = openai.Audio.transcribe("whisper-1", audio_file)
         yield json.dumps(transcript, ensure_ascii=False)
     prompt=messages[-1]['content']
-    openai.api_key = api_key if api_key else api_key_env
+    openai.api_key = 'HY9X_ylA7dRfWAaDLtNWtXTkHAD9R7dPz0k5ieoAz34' #api_key if api_key else api_key_env
     print(openai.api_key)
     #匹配endpoint
     for models_endpoints in data['data']:
