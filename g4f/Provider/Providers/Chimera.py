@@ -100,7 +100,7 @@ def _create_completion(api_key: str, model: str, messages: list, stream: bool, *
             )
             
             for chunk in response:
-                yield chunk.choices[0].delta.get("content", "").decode('utf-8')
+                yield str(chunk.choices[0].delta.get("content", "")).decode('utf-8')
             print(response)    
         except openai.error.PermissionError as e:
             yield e.user_message
@@ -136,12 +136,12 @@ def _create_completion(api_key: str, model: str, messages: list, stream: bool, *
             )
             yield prompt
             for chunk in response:
-                yield chunk.choices[0].text.decode('utf-8')
+                yield chunk.choices[0].text
             
         except openai.error.PermissionError as e:
             yield e.user_message
         except openai.error.InvalidRequestError as e:
-            yield e.user_message
+            yield e.user_message      
         except openai.error.APIError as e:
             
             detail_pattern = re.compile(r'{"detail":"(.*?)"}')
@@ -156,7 +156,7 @@ def _create_completion(api_key: str, model: str, messages: list, stream: bool, *
                 yield e.user_message
         except Exception as e:
             # 处理其他异常
-            yield e
+            yield e    
            
     #images
     def image_gen(endpoint,model,prompt):
@@ -172,11 +172,11 @@ def _create_completion(api_key: str, model: str, messages: list, stream: bool, *
             responseimg=json.dumps(response["data"])
             for img in eval(responseimg):
                 mediaphoto="[!["+prompt+"]("+img['url']+")]("+img['url']+")"
-                yield str(mediaphoto).decode('utf-8')
+                yield str(mediaphoto)
         except openai.error.PermissionError as e:
             yield e.user_message
         except openai.error.InvalidRequestError as e:
-            yield e.user_message
+            yield e.user_message      
         except openai.error.APIError as e:
             
             detail_pattern = re.compile(r'{"detail":"(.*?)"}')
@@ -204,12 +204,12 @@ def _create_completion(api_key: str, model: str, messages: list, stream: bool, *
             )   
            
             embeddings = response['data'][0]['embedding']
-            yield str(embeddings).decode('utf-8')
+            yield str(embeddings)
             #print(embeddings)
         except openai.error.PermissionError as e:
             yield e.user_message
         except openai.error.InvalidRequestError as e:
-            yield e.user_message
+            yield e.user_message      
         except openai.error.APIError as e:
             
             detail_pattern = re.compile(r'{"detail":"(.*?)"}')
@@ -239,7 +239,7 @@ def _create_completion(api_key: str, model: str, messages: list, stream: bool, *
             
             if(result):
                 censorflag='审核未通过,包含敏感内容：\n\n'
-                yield censorflag.decode('utf-8')
+                yield censorflag
                 moderate={
                      "sexual":"性行为",
                      "hate":"仇恨", 
@@ -258,12 +258,12 @@ def _create_completion(api_key: str, model: str, messages: list, stream: bool, *
                         
             else:
                 censorflag='内容合规，审核通过'
-                yield censorflag.decode('utf-8')
+                yield censorflag
             
         except openai.error.PermissionError as e:
             yield e.user_message
         except openai.error.InvalidRequestError as e:
-            yield e.user_message
+            yield e.user_message      
         except openai.error.APIError as e:
             
             detail_pattern = re.compile(r'{"detail":"(.*?)"}')
@@ -285,7 +285,7 @@ def _create_completion(api_key: str, model: str, messages: list, stream: bool, *
         yield endpoint+"-"+model+"：暂时未开发\n\n"        
         audio_file = open("./audio_file.mp3", "rb")
         transcript = openai.Audio.transcribe("whisper-1", audio_file)
-        yield json.dumps(transcript, ensure_ascii=False).decode('utf-8')
+        yield json.dumps(transcript, ensure_ascii=False)
     prompt=messages[-1]['content']
     openai.api_key = api_key if api_key else api_key_env
     #匹配endpoint
@@ -326,7 +326,7 @@ def _create_completion(api_key: str, model: str, messages: list, stream: bool, *
 
     if(endpoint=='completions'):  
         for msg in completions(endpoint,model):
-            yield msg
+            yield msg 
 
     if(endpoint=='images/generations'):
         language = detect(prompt)
@@ -346,15 +346,15 @@ def _create_completion(api_key: str, model: str, messages: list, stream: bool, *
             else:
                 prompt=prompteng.replace('chat/completions-gpt-4：','').replace('\n','')
         for msg in image_gen(endpoint,model,prompt):
-            yield msg
+            yield msg 
 
     if(endpoint=='embeddings'):
         for msg in word_embeddings(endpoint,model,prompt):
-            yield msg
+            yield msg 
     if(endpoint=='moderations'):
         censorship=''
         for msg in moderations(endpoint,model):
-            yield msg
+            yield msg 
             censorship=censorship+msg+"\n\n"
         if(censorship.find('审核未通过')>=0):
             print(censorship)
