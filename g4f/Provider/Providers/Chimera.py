@@ -103,9 +103,9 @@ def _create_completion(api_key: str, model: str, messages: list, stream: bool, *
                 yield str(chunk.choices[0].delta.get("content", "")).decode('utf-8')
             print(response)    
         except openai.error.PermissionError as e:
-            print(e.user_message)
+            yield e.user_message)
         except openai.error.InvalidRequestError as e:
-            print(e.user_message)    
+            yield e.user_message)    
         except openai.error.APIError as e:
             
             detail_pattern = re.compile(r'{"detail":"(.*?)"}')
@@ -114,13 +114,13 @@ def _create_completion(api_key: str, model: str, messages: list, stream: bool, *
             if match:
                 error_message = match.group(1)
                 print(error_message)
-                yield error_message
+                #yield error_message
             else:
                 print(e.user_message)
-                yield e.user_message
+                #yield e.user_message
         except Exception as e:
             # 处理其他异常
-            yield e
+            print(e)
        
     #completions
     def completions(endpoint,model):
