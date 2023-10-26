@@ -99,8 +99,8 @@ def _create_completion(api_key: str, model: str, messages: list, stream: bool, *
                 allow_fallback=True
             )
             
-            #for chunk in response:
-                #yield str(chunk.choices[0].delta.get("content", "")).decode('utf-8')
+            for chunk in response:
+                yield str(chunk.choices[0].delta.get("content", "")).decode('utf-8')
             print(response)    
         except openai.error.PermissionError as e:
             yield e.user_message
@@ -322,7 +322,7 @@ def _create_completion(api_key: str, model: str, messages: list, stream: bool, *
     #根据endpoint调用模型
     if(endpoint=='chat/completions'):
         for msg in chat_completions(endpoint,model,messages):
-            yield str(msg).decode('utf-8')
+            yield msg
 
     if(endpoint=='completions'):  
         for msg in completions(endpoint,model):
