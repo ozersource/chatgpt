@@ -114,13 +114,13 @@ def _create_completion(api_key: str, model: str, messages: list, stream: bool, *
             if match:
                 error_message = match.group(1)
                 print(error_message)
-                yield error_message
+                yield error_message.decode('utf-8')
             else:
                 print(e.user_message)
-                yield e.user_message
+                yield e.user_message.decode('utf-8')
         except Exception as e:
             # 处理其他异常
-            yield e.decode('utf-8')
+            yield e
 
     #completions
     def completions(endpoint,model):
@@ -150,10 +150,10 @@ def _create_completion(api_key: str, model: str, messages: list, stream: bool, *
             if match:
                 error_message = match.group(1)
                 print(error_message)
-                yield error_message
+                yield error_message.decode('utf-8')
             else:
                 print(e.user_message)
-                yield e.user_message
+                yield e.user_message.decode('utf-8')
         except Exception as e:
             # 处理其他异常
             yield e    
@@ -174,9 +174,9 @@ def _create_completion(api_key: str, model: str, messages: list, stream: bool, *
                 mediaphoto="[!["+prompt+"]("+img['url']+")]("+img['url']+")"
                 yield str(mediaphoto)
         except openai.error.PermissionError as e:
-            yield e.user_message
+            yield e.user_message.decode('utf-8')
         except openai.error.InvalidRequestError as e:
-            yield e.user_message      
+            yield e.user_message.decode('utf-8')    
         except openai.error.APIError as e:
 
             detail_pattern = re.compile(r'{"detail":"(.*?)"}')
@@ -185,10 +185,10 @@ def _create_completion(api_key: str, model: str, messages: list, stream: bool, *
             if match:
                 error_message = match.group(1)
                 print(error_message)
-                yield error_message
+                yield error_message.decode('utf-8')
             else:
                 print(e.user_message)
-                yield e.user_message
+                yield e.user_message.decode('utf-8')
         except Exception as e:
             # 处理其他异常
             yield e
@@ -207,9 +207,9 @@ def _create_completion(api_key: str, model: str, messages: list, stream: bool, *
             yield str(embeddings)
             #print(embeddings)
         except openai.error.PermissionError as e:
-            yield e.user_message
+            yield e.user_message.decode('utf-8')
         except openai.error.InvalidRequestError as e:
-            yield e.user_message      
+            yield e.user_message.decode('utf-8')    
         except openai.error.APIError as e:
 
             detail_pattern = re.compile(r'{"detail":"(.*?)"}')
@@ -218,10 +218,10 @@ def _create_completion(api_key: str, model: str, messages: list, stream: bool, *
             if match:
                 error_message = match.group(1)
                 print(error_message)
-                yield error_message
+                yield error_message.decode('utf-8')
             else:
                 print(e.user_message)
-                yield e.user_message
+                yield e.user_message.decode('utf-8')
         except Exception as e:
             # 处理其他异常
             yield e
@@ -261,9 +261,9 @@ def _create_completion(api_key: str, model: str, messages: list, stream: bool, *
                 yield censorflag
 
         except openai.error.PermissionError as e:
-            yield e.user_message
+            yield e.user_message.decode('utf-8')
         except openai.error.InvalidRequestError as e:
-            yield e.user_message      
+            yield e.user_message.decode('utf-8') 
         except openai.error.APIError as e:
 
             detail_pattern = re.compile(r'{"detail":"(.*?)"}')
@@ -272,10 +272,10 @@ def _create_completion(api_key: str, model: str, messages: list, stream: bool, *
             if match:
                 error_message = match.group(1)
                 print(error_message)
-                yield error_message
+                yield error_message.decode('utf-8')
             else:
                 print(e.user_message)
-                yield e.user_message
+                yield e.user_message.decode('utf-8')
         except Exception as e:
             # 处理其他异常
             yield e
