@@ -114,13 +114,13 @@ def _create_completion(api_key: str, model: str, messages: list, stream: bool, *
             if match:
                 error_message = match.group(1)
                 print(error_message)
-                yield error_message.decode('utf-8')
+                #yield error_message.decode('utf-8')
             else:
                 print(e.user_message)
-                yield e.user_message.decode('utf-8')
+                #yield e.user_message.decode('utf-8')
         except Exception as e:
             # 处理其他异常
-            yield e
+            yield e.decode('utf-8')
 
     #completions
     def completions(endpoint,model):
@@ -150,10 +150,10 @@ def _create_completion(api_key: str, model: str, messages: list, stream: bool, *
             if match:
                 error_message = match.group(1)
                 print(error_message)
-                yield error_message.decode('utf-8')
+                yield error_message
             else:
                 print(e.user_message)
-                yield e.user_message.decode('utf-8')
+                yield e.user_message
         except Exception as e:
             # 处理其他异常
             yield e    
@@ -174,9 +174,9 @@ def _create_completion(api_key: str, model: str, messages: list, stream: bool, *
                 mediaphoto="[!["+prompt+"]("+img['url']+")]("+img['url']+")"
                 yield str(mediaphoto)
         except openai.error.PermissionError as e:
-            yield e.user_message.decode('utf-8')
+            yield e.user_message
         except openai.error.InvalidRequestError as e:
-            yield e.user_message.decode('utf-8')    
+            yield e.user_message  
         except openai.error.APIError as e:
 
             detail_pattern = re.compile(r'{"detail":"(.*?)"}')
@@ -185,10 +185,10 @@ def _create_completion(api_key: str, model: str, messages: list, stream: bool, *
             if match:
                 error_message = match.group(1)
                 print(error_message)
-                yield error_message.decode('utf-8')
+                yield error_message
             else:
                 print(e.user_message)
-                yield e.user_message.decode('utf-8')
+                yield e.user_message
         except Exception as e:
             # 处理其他异常
             yield e
@@ -207,9 +207,9 @@ def _create_completion(api_key: str, model: str, messages: list, stream: bool, *
             yield str(embeddings)
             #print(embeddings)
         except openai.error.PermissionError as e:
-            yield e.user_message.decode('utf-8')
+            yield e.user_message
         except openai.error.InvalidRequestError as e:
-            yield e.user_message.decode('utf-8')    
+            yield e.user_message  
         except openai.error.APIError as e:
 
             detail_pattern = re.compile(r'{"detail":"(.*?)"}')
@@ -218,13 +218,13 @@ def _create_completion(api_key: str, model: str, messages: list, stream: bool, *
             if match:
                 error_message = match.group(1)
                 print(error_message)
-                yield error_message.decode('utf-8')
+                yield error_message
             else:
                 print(e.user_message)
-                yield e.user_message.decode('utf-8')
+                yield e.user_message
         except Exception as e:
             # 处理其他异常
-            yield e
+            yield e.decode('utf-8')
 
     #moderations
     def moderations(endpoint,model):
@@ -261,9 +261,9 @@ def _create_completion(api_key: str, model: str, messages: list, stream: bool, *
                 yield censorflag
 
         except openai.error.PermissionError as e:
-            yield e.user_message.decode('utf-8')
+            yield e.user_message
         except openai.error.InvalidRequestError as e:
-            yield e.user_message.decode('utf-8') 
+            yield e.user_message
         except openai.error.APIError as e:
 
             detail_pattern = re.compile(r'{"detail":"(.*?)"}')
@@ -272,13 +272,13 @@ def _create_completion(api_key: str, model: str, messages: list, stream: bool, *
             if match:
                 error_message = match.group(1)
                 print(error_message)
-                yield error_message.decode('utf-8')
+                yield error_message
             else:
                 print(e.user_message)
-                yield e.user_message.decode('utf-8')
+                yield e.user_message
         except Exception as e:
             # 处理其他异常
-            yield e
+            yield e.decode('utf-8')
 
     #audio
     def audio_transcriptions(endpoint,model):
@@ -287,7 +287,7 @@ def _create_completion(api_key: str, model: str, messages: list, stream: bool, *
         transcript = openai.Audio.transcribe("whisper-1", audio_file)
         yield json.dumps(transcript, ensure_ascii=False)
     prompt=messages[-1]['content']
-    openai.api_key = api_key if api_key else api_key_env
+    openai.api_key = api_key_env if api_key_env else api_key
     #匹配endpoint
     for models_endpoints in data['data']:
         if models_endpoints['id'] == model:
