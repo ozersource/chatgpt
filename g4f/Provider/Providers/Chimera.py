@@ -14,33 +14,59 @@ load_dotenv()
 api_key_env = os.environ.get("CHIMERA_API_KEY")
 openai.api_base = "https://api.naga.ac/v1"
 url = 'https://api.naga.ac/'
-model = [
-    'gpt-3.5-turbo',
-    'gpt-3.5-turbo-0301',
-    'gpt-3.5-turbo-openai',
-    'gpt-3.5-turbo-16k',
-    'gpt-3.5-turbo-16k-openai',
-    'gpt-3.5-turbo-16k-poe',
-    'gpt-4',
-    'gpt-4-0314',
-    'gpt-4-32k',
-    'kandinsky'
+app__api__v1__chat__Completions__Models = [
+    "gpt-4",
+    "gpt-4-vision-preview",
+    "gpt-4-1106-preview",
+    "gpt-4-0613",
+    "gpt-3.5-turbo",
+    "gpt-3.5-turbo-1106",
+    "gpt-3.5-turbo-0613",
+    "llama-2-70b-chat",
+    "llama-2-13b-chat",
+    "llama-2-7b-chat",
+    "code-llama-34b",
+    "mistral-7b",
+    "falcon-180b-chat",
+    "claude-2",
+    "claude-instant"
+]
+app__api__v1__images__Images__Models=[
+    "midjourney",
+    "sdxl",
+    "latent-consistency-model",
+    "kandinsky-2.2",
+    "kandinsky-2",
+    "dall-e",
+    "stable-diffusion-2.1",
+    "stable-diffusion-1.5",
+    "deepfloyd-if",
+    "material-diffusion"
 ]
 # 发送请求并获取models
-response = requests.get(openai.api_base+"/models")
+#response = requests.get(openai.api_base+"/models")
 
 # 将 JSON 数据解析为 Python 对象
-data = json.loads(response.text)
+#data = json.loads(response.text)
+
+data={}
+data['data']=[]
+for modelaaa in app__api__v1__chat__Completions__Models:
+    data['data'].append({"id":modelaaa,"endpoints":["/v1/chat/completions"],"owned_by":"OPENAI"})
+for modelaaa in app__api__v1__images__Images__Models:
+    data['data'].append({"id":modelaaa,"endpoints":["/v1/images/generations"],"owned_by":"OPENAI"})    
+
 model=[]
 model_endpoint=[]
 model_public=[]
 for Models in data['data']:
-    if 'public' in Models:
+    #if 'public' in Models:
         model.append(Models['id'])
+        print(Models)
         model_endpoint.append(Models['endpoints'][0].replace('/v1/',''))
-        model_public.append(Models['public']) 
+#        model_public.append(Models['public']) 
 # 输出解析后的数据
-
+print(data['data'])
 groups=[]
 for htmlmodels in model_endpoint:
     if(htmlmodels not in groups):
@@ -50,7 +76,7 @@ htmlstr=""
 for group in groups:
     htmlstr=htmlstr+f"<optgroup label='{group}'>"
     for index,htmlmodels in enumerate(model):
-        if(model_endpoint[index]==group and model_public[index]):
+        if(model_endpoint[index]==group):
             htmlstr=htmlstr+f"<option value='{htmlmodels}'>{htmlmodels}</option>"
     htmlstr=htmlstr+f"</optgroup>"
 
@@ -320,7 +346,9 @@ def _create_completion(api_key: str, model: str, messages: list, stream: bool, *
             yield "更新时间：" + str(datetime.datetime.fromtimestamp(timestamp))          
             return
     #根据endpoint调用模型
+    print(endpoint)
     if(endpoint=='chat/completions'):
+        
         for msg in chat_completions(endpoint,model,messages):
             yield msg
 
